@@ -8,7 +8,7 @@ const server = new http.Server();
 server.on('request', (req, res) => {
   const pathname = url.parse(req.url).pathname.slice(1);
 
-  const filepath = path.join(__dirname, 'test/fixtures', pathname);
+  const filepath = path.join(__dirname, 'files', pathname);
 
   var slashSeparator = url.parse(req.url).pathname.split('/').length - 1;
   if (slashSeparator > 1) {
