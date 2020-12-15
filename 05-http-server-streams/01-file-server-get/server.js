@@ -12,7 +12,6 @@ server.on('request', (req, res) => {
 
   var slashSeparator = url.parse(req.url).pathname.split('/').length - 1;
   if (slashSeparator > 1) {
-      //console.log('I am here!');
       res.statusCode = 400;
       res.end('Folders is not implemented');
       return;
