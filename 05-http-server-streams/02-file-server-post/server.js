@@ -15,7 +15,7 @@ server.on('request', (req, res) => {
 
   if (slashSeparator > 1) {
       res.statusCode = 400;
-      res.end('Folders is not implemented');
+      res.end('Folders are not implemented');
       return;
   }
 
@@ -28,7 +28,9 @@ server.on('request', (req, res) => {
   switch (req.method) {
     case 'POST':
       var writeStream = fs.createWriteStream(filepath);
-      var limitStream = new LimitSizeStream({limit: 1000000});
+      var limitStream = new LimitSizeStream({limit: (1000000)});
+
+      req.pipe( limitStream ).pipe( writeStream );
 
       limitStream.on('error', function(err) {
         
@@ -45,6 +47,7 @@ server.on('request', (req, res) => {
       });
 
       writeStream.on('error', function() {
+
         fs.unlinkSync(filepath);
 
         res.statusCode = 500;
@@ -52,23 +55,30 @@ server.on('request', (req, res) => {
       });
 
       writeStream.on('finish', function() {
+
         res.statusCode = 201;
         res.end("File is succesfully created");
         return;
       });
 
       req.on('error', function() {
+        
         fs.unlinkSync(filepath);
 
         res.statusCode = 500;
         res.end();
-        writeStream.destroy();
+        //writeStream.destroy();
         return;
       });
 
-      req.pipe( limitStream );
-      req.pipe( writeStream );
-
+      req.on('aborted', function() {
+        fs.unlinkSync(filepath);
+        
+        res.statusCode = 500;
+        res.end();
+        //writeStream.destroy();
+        return;
+        });
       break;
 
     default:
