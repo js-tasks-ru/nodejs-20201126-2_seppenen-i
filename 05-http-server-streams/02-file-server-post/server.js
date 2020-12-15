@@ -53,7 +53,7 @@ server.on('request', (req, res) => {
 
       writeStream.on('finish', function() {
         res.statusCode = 201;
-        res.end("File is succesfully created!");
+        res.end("File is succesfully created");
         return;
       });
 

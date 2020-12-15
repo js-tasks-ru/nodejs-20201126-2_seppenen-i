@@ -19,7 +19,7 @@ server.on('request', (req, res) => {
 
   if (!fs.existsSync(filepath)) {
     res.statusCode = 404;
-    res.end('No such file');
+    res.end('No such file.');
   }
 
   switch (req.method) {
