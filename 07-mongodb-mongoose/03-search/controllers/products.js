@@ -2,7 +2,7 @@
 const Product = require("../models/Product");
 
 module.exports.productsByQuery = async function productsByQuery(ctx, next) {
-
+  /*cmment new commit*/
   var { query } = ctx.request.query;
 
   var products = null;
