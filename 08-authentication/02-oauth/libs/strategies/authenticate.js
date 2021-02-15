@@ -7,7 +7,7 @@ module.exports = async function authenticate(strategy, email, displayName, done)
     return;
   }  
   try {
-
+    //test 2
     var user = await User.findOne({email});
 
     if (user == null) {

@@ -6,6 +6,7 @@ module.exports = new LocalStrategy(
     	usernameField: 'email',
     	session: false
     },
+    //test
     async function(email, password, done) {
 
       var user = await User.findOne({email});
